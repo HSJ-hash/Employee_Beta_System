@@ -97,7 +97,9 @@ export default function TaskViewTabbed(props) {
             aria-label="styled tabs example"
           >
             <StyledTab label="Vacancies" />
-            {props.role === "leader" || props.role === "admin" ? (
+            {props.role === "leader" ||
+            props.role === "admin" ||
+            props.role === "HR Manager" ? (
               <div className="d-flex justify-content-end w-100">
                 <Button
                   startIcon={<AddIcon />}

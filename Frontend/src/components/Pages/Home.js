@@ -25,6 +25,18 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   function percentage(completed, total) {
+    if (
+      completed === 0 ||
+      total === 0 ||
+      completed === null ||
+      total === null
+    ) {
+      return (
+        <p className="countDesc" style={{ color: "gray" }}>
+          Nothing in queue
+        </p>
+      );
+    }
     var percentage = (completed / total) * 100;
     var toGo = 100 - percentage;
 
@@ -158,11 +170,11 @@ export default function Home() {
                     <div>
                       <div className="d-flex align-items-end">
                         <p className="homeCountTop me-1">
-                          {data.tasksCompleted}
+                          {data.tasksInProgress}
                         </p>
                         <p className="homeCountTop2"> / {data.totalTasks}</p>
                       </div>
-                      {percentage(data.tasksCompleted, data.totalTasks)}
+                      {percentage(data.tasksInProgress, data.totalTasks)}
                     </div>
                   )}
                 </CardContent>
@@ -219,7 +231,7 @@ export default function Home() {
             <DashboardCard>
               <CardActionArea
                 onClick={() => {
-                  navigate("/todo");
+                  navigate("/documents");
                 }}
               >
                 <CardContent>
@@ -261,7 +273,6 @@ export default function Home() {
           </Grid>
         </Grid>
 
-        
         <Grid item xs={7}>
           <DashboardCard style={{ height: "100%" }}>
             <p className="homeTopic ms-3 mt-3">Your Performance</p>
@@ -270,8 +281,6 @@ export default function Home() {
             </CardContent>
           </DashboardCard>
         </Grid>
-
-
 
         <Grid container item xs={12} spacing={3}>
           <Grid item xs={7}>
@@ -283,8 +292,6 @@ export default function Home() {
             </DashboardCard>
           </Grid>
 
-
-
           <Grid item xs={5}>
             <DashboardCard>
               <p className="homeTopic ms-3 mt-3">Tasks</p>
@@ -295,8 +302,6 @@ export default function Home() {
           </Grid>
         </Grid>
       </Grid>
-
-
     </div>
   );
 }

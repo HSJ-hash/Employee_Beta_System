@@ -89,6 +89,23 @@ const getProjects = async (req, res) => {
     });
 };
 
+// GET ALL PROJECT DETAILS
+const getAllProjects = async (req, res) => {
+  try {
+    // Fetch all projects and populate the team field
+    const projects = await Project.find().populate("team");
+
+    // Optionally, update project status and set progress for each project
+    updateStatus(projects);
+    setProgress(projects);
+
+    // Send all projects back in the response
+    res.json(projects);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // UPDATE PROJECT DETAILS
 const updateProject = async (req, res) => {
   try {
@@ -306,7 +323,7 @@ const homeData = async (req, res) => {
   projects.forEach((project) => {
     if (project.team !== null) {
       proj.push(project);
-      if (project.status === "Completed") {
+      if (project.status === "In Progress" || project.status === "Started") {
         ++completedProjs;
       }
     }
@@ -406,6 +423,7 @@ const getBurndownDetails = async (req, res) => {
 module.exports = {
   createProject,
   getProjects,
+  getAllProjects,
   showProject,
   updateProject,
   deleteProject,

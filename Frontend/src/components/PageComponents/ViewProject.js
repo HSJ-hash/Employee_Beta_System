@@ -289,7 +289,7 @@ export default function ViewProject() {
           </div>
 
           {/* OPTIONS MENU START */}
-          {role === "leader" || role === "admin" ? (
+          {role === "leader" || role === "admin" || role === "HR Manager" ? (
             <div>
               <ButtonWrapper
                 id="demo-customized-button"

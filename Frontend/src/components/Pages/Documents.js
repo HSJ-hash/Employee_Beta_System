@@ -176,6 +176,9 @@ export default function Documents() {
                   sx={{
                     color: "text.secondary",
                     textAlign: "left",
+                    maxHeight: 100,
+                    overflowY: "auto",
+                    paddingRight: 1,
                   }}
                 >
                   {row.description}

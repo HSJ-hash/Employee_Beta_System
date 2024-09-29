@@ -191,7 +191,7 @@ export default function Project() {
           <AccountTreeIcon className="me-2 " style={{ color: "gray" }} /> Your
           Projects
         </p>
-        {role === "leader" || role === "admin" ? (
+        {role === "leader" || role === "admin" || role === "HR Manager" ? (
           <div>
             <ButtonWrapper
               startIcon={<PrintIcon />}

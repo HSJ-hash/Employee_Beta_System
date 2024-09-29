@@ -105,6 +105,25 @@ const getTaskEmp = async (req, res) => {
     });
 };
 
+// GET ALL TASKS (only with valid project details)
+const getAllTasks = async (req, res) => {
+  try {
+    // Fetch all tasks and populate projectId with projectName
+    const tasks = await Task.find().populate("projectId", "projectName");
+
+    // Filter tasks to include only those with valid projectId details
+    const validTasks = tasks.filter((task) => task.projectId);
+
+    // Optionally, update the status of valid tasks
+    updateStatus(validTasks);
+
+    // Send filtered tasks back in the response
+    res.json(validTasks);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 //get project task
 //change the email to image src when needed
 const getTaskProj = async (req, res) => {
@@ -337,6 +356,7 @@ const requestExtention = async (req, res) => {
 module.exports = {
   createTask,
   getEmp,
+  getAllTasks,
   getTaskEmp,
   getTaskDetail,
   updateTask,

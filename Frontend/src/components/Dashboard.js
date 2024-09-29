@@ -32,6 +32,8 @@ import {
   useLocation,
   NavLink,
 } from "react-router-dom";
+import AdminProjects from "./Pages/AdminProjects";
+import AdminTasks from "./Pages/AdminTasks";
 import Project from "./Pages/Project";
 import Ranking from "./Pages/Ranking";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
@@ -81,20 +83,6 @@ import StarsIcon from "@mui/icons-material/Stars";
 import vector from "../../src/images/avatar.jpg";
 
 const drawerWidth = 240;
-
-// NAVIGATION
-const commonNav = [
-  { name: "Dashboard", icon: <DashboardIcon />, path: "/" },
-  { name: "Ranking Board", icon: <StarsIcon />, path: "/ranking" },
-  { name: "Projects", icon: <AccountTreeIcon />, path: "/project" },
-  { name: "Tasks", icon: <TaskIcon />, path: "/tasks" },
-  { name: "Vacancies", icon: <PersonAddAlt1Icon />, path: "/vacancies" },
-  { name: "Teams", icon: <GroupsIcon />, path: "/teams" },
-  { name: "Meetings", icon: <VideocamIcon />, path: "/meetings" },
-  { name: "Notices", icon: <ArticleIcon />, path: "/documents" },
-  { name: "ToDo", icon: <TaskAltIcon />, path: "/todo" },
-  { name: "Request leave", icon: <ExitToAppIcon />, path: "/leaveReq" },
-];
 
 const roleNav = [
   { name: "Employees", icon: <EngineeringIcon />, path: "/employees" },
@@ -333,6 +321,14 @@ export default function Dashboard() {
       });
       sessionStorage.removeItem("teamUpdated");
     }
+    if (sessionStorage.getItem("MeetingUpdated") == "1") {
+      setNotify({
+        isOpen: true,
+        message: "Meeting Updated",
+        type: "success",
+      });
+      sessionStorage.removeItem("MeetingUpdated");
+    }
   });
 
   //Get Current logged in user's username, ID, creditPoints
@@ -466,6 +462,42 @@ export default function Dashboard() {
     sessionStorage.setItem("window", "Dashboard");
   };
 
+  // NAVIGATION
+  const commonNav = [
+    { name: "Dashboard", icon: <DashboardIcon />, path: "/" },
+    { name: "Ranking Board", icon: <StarsIcon />, path: "/ranking" },
+    ...(role !== "admin"
+      ? [{ name: "Projects", icon: <AccountTreeIcon />, path: "/project" }]
+      : []),
+    ...(role === "admin"
+      ? [
+          {
+            name: "Projects",
+            icon: <AccountTreeIcon />,
+            path: "/adminProjects",
+          },
+        ]
+      : []),
+    ...(role !== "admin"
+      ? [{ name: "Tasks", icon: <TaskIcon />, path: "/tasks" }]
+      : []),
+    ...(role === "admin"
+      ? [
+          {
+            name: "Tasks",
+            icon: <TaskIcon />,
+            path: "/adminTasks",
+          },
+        ]
+      : []),
+    { name: "Vacancies", icon: <PersonAddAlt1Icon />, path: "/vacancies" },
+    { name: "Teams", icon: <GroupsIcon />, path: "/teams" },
+    { name: "Meetings", icon: <VideocamIcon />, path: "/meetings" },
+    { name: "Notices", icon: <ArticleIcon />, path: "/documents" },
+    { name: "ToDo", icon: <TaskAltIcon />, path: "/todo" },
+    { name: "Request leave", icon: <ExitToAppIcon />, path: "/leaveReq" },
+  ];
+
   return (
     <Box sx={{ display: "flex" }}>
       {/* NOTIFICATION */}
@@ -507,7 +539,12 @@ export default function Dashboard() {
           <p className="pageTitle">{windowName}</p>
 
           {/* SEARCH */}
-          <Box sx={{ flexGrow: 0 }} className="ms-auto d-flex" display="flex" alignItems="center">
+          <Box
+            sx={{ flexGrow: 0 }}
+            className="ms-auto d-flex"
+            display="flex"
+            alignItems="center"
+          >
             <Search />
 
             {/* SEARCH END */}
@@ -542,7 +579,9 @@ export default function Dashboard() {
                     style={{ borderRadius: "50%", height: "40px" }}
                     alt="Profile"
                   />
-                  <span style={{ fontSize: "12px", marginTop: "4px" }}>{curUname}</span>
+                  <span style={{ fontSize: "12px", marginTop: "4px" }}>
+                    {curUname}
+                  </span>
                 </Box>
               </IconButton>
             </Tooltip>
@@ -728,6 +767,8 @@ export default function Dashboard() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/project" element={<Project />} />
+          <Route exact path="/adminProjects" element={<AdminProjects />} />
+          <Route exact path="/adminTasks" element={<AdminTasks />} />
           <Route exact path="/ranking" element={<Ranking />} />
           <Route exact path="/tasks" element={<Tasks />} />
           <Route exact path="/vacancies" element={<Vacancies />} />

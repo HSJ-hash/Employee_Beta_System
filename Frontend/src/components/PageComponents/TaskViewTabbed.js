@@ -98,7 +98,9 @@ export default function TaskViewTabbed(props) {
           >
             <StyledTab label="Project Tasks" />
             <StyledTab label="Kanban board" />
-            {props.role === "leader" || props.role === "admin" ? (
+            {props.role === "leader" ||
+            props.role === "admin" ||
+            props.role === "HR Manager" ? (
               <div className="d-flex justify-content-end w-100">
                 <Button
                   startIcon={<AddIcon />}

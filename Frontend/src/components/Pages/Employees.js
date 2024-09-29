@@ -302,40 +302,6 @@ export default function Employees() {
                     >
                       <DeleteIcon sx={{ color: "red" }} />
                     </IconButton>
-
-                    <Dialog
-                      fullScreen={fullScreen}
-                      open={openn}
-                      onClose={handleClose2}
-                      aria-labelledby="responsive-dialog-title"
-                    >
-                      <DialogTitle id="responsive-dialog-title">
-                        {"Do you want to delete the Employee ?"}
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          This will delete all the details of the employee.
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <ButtonWrapper
-                          autoFocus
-                          onClick={() => {
-                            handleClose2();
-                          }}
-                        >
-                          CANCEL
-                        </ButtonWrapper>
-                        <ButtonWrapper
-                          onClick={() => {
-                            DeleteEmployee(feUID);
-                          }}
-                          autoFocus
-                        >
-                          DELETE
-                        </ButtonWrapper>
-                      </DialogActions>
-                    </Dialog>
                   </div>
                 </TableCell>
               </TableRow>
@@ -343,6 +309,45 @@ export default function Employees() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={openn}
+        onClose={handleClose2}
+        aria-labelledby="responsive-dialog-title"
+        sx={{
+          "& .MuiPaper-root": {
+            backdropFilter: "blur(10px)",
+          },
+        }}
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Do you want to delete the Employee ?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This will delete all the details of the employee.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <ButtonWrapper
+            autoFocus
+            onClick={() => {
+              handleClose2();
+            }}
+          >
+            CANCEL
+          </ButtonWrapper>
+          <ButtonWrapper
+            onClick={() => {
+              DeleteEmployee(feUID);
+            }}
+            autoFocus
+          >
+            DELETE
+          </ButtonWrapper>
+        </DialogActions>
+      </Dialog>
 
       <AddEmployee
         openPopup={openPopup}

@@ -5,6 +5,7 @@ const {
   createTask,
   getEmp,
   getTaskEmp,
+  getAllTasks,
   getTaskDetail,
   updateTask,
   deleteTask,
@@ -24,6 +25,8 @@ router.get("/getEmp/:id", protect, getEmp);
 
 //get employee task
 router.get("/", protect, getTaskEmp);
+
+router.get("/getAllTasks", protect, getAllTasks);
 
 //get project task
 router.get("/projectTask/:id", protect, getTaskProj);
